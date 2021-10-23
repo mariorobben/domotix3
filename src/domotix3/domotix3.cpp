@@ -1,30 +1,22 @@
 #include <iostream>
-#ifdef _WIN32
+#include <chrono>
+#include <thread>
 
 #include "wago.hpp"
-
-int main(int argc, char** argv)
-{
-	std::cout << "hello windows" << std::endl;
-	return 0;
-}
-
-#else
-
-#include <iostream>
-
-#include "kbus_adi.hpp"
-
-#include <unistd.h>
 
 using namespace std;
 using namespace wago;
 
+unique_ptr<wago_device> create_wago_device()
+{
+	return std::make_unique<wago_http_client>();
+}
+
 int main(int argc, char** argv)
 {
-	adi_kbus_device wago;
+	auto wago_device = create_wago_device();
 
-	auto status = wago.get_status();
+	auto status = wago_device->get_status();
 	cout << "status" << endl;
 	cout << "get_bit_count: " << status.get_bit_count() << endl;
 	cout << "get_terminal_count: " << status.get_terminal_count() << endl;
@@ -34,7 +26,7 @@ int main(int argc, char** argv)
 	cout << "get_bit_count_digital_output: " << status.get_bit_count_digital_output() << endl;
 	cout << endl;
 
-	auto terminals = wago.get_terminals();
+	auto terminals = wago_device->get_terminals();
 	cout << "terminals" << endl;
 	for (auto terminal : terminals)
 	{
@@ -49,17 +41,17 @@ int main(int argc, char** argv)
 		cout << endl;
 	}
 
+	int i = 0;
 	while (true)
 	{
-		//void write_bytes(wago_device& wago_device, int32_t offset, const bytes_type& bytes);
-		//bytes_type read_bytes(wago_device&  wago_device, int32_t offset, int32_t size);
-		auto bts = read_bytes(wago, 0, 1);
-		write_bytes(wago, 8, bts);
-		usleep(10000);
+		auto bts = read_bytes(*wago_device, 0, 1);
+		write_bytes(*wago_device, 8, bts);
 		cout << "." << flush;
+
+		this_thread::sleep_for(chrono::milliseconds(10));
+		if (i == 0) { cout << "*" << flush; }
+		i = (i + 1) % 100;
 	}
 
 	return 0;
 }
-
-#endif

@@ -1,7 +1,5 @@
 #include "wago.hpp"
 
-#include <string.h>
-
 namespace wago
 {
 
@@ -128,7 +126,8 @@ bytes_type read_bytes(wago_device& wago_device, int32_t offset, int32_t size)
 {
 	read_bytes_region_type regions;
 	regions.push_back(make_pair(offset, size));
-	return wago_device.read_bytes(regions)[0];
+	auto result = wago_device.read_bytes(regions);
+	return result.front();
 }
 
 #pragma endregion

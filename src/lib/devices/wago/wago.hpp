@@ -82,6 +82,6 @@ public:
 
 };
 
-#include "json_client.hpp"
+#include "wago_http_client.hpp"
 
 #endif

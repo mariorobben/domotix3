@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="json_client.hpp">
+    <ClInclude Include="wago_http_client.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="wago.hpp">
@@ -24,6 +24,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="wago.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wago_http_client.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -19,11 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="json_client.hpp" />
+    <ClInclude Include="wago_http_client.hpp" />
     <ClInclude Include="wago.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="wago.cpp" />
+    <ClCompile Include="wago_http_client.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

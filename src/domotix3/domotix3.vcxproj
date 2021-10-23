@@ -145,6 +145,11 @@
   <ItemGroup>
     <ClCompile Include="domotix3.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\lib\devices\wago\wago.vcxproj">
+      <Project>{3a399823-89dd-4426-a200-34056cda59cc}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

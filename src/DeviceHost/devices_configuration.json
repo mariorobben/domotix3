@@ -1,0 +1,19 @@
+{
+  "devices": [
+    {
+      "type": "wago",
+      "name": "wago_berging",
+      "modules": [
+        "750-430",
+        "750-430",
+        "750-430"
+      ]
+    }, {
+      "type": "milight",
+      "name":  "milight_berging" 
+    }, {
+      "type": "milight",
+      "name": "milight_bureau" 
+    }
+  ] 
+}
