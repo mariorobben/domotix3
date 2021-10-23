@@ -19,7 +19,7 @@ namespace DeviceHost
         {
             RegisterDevices();
 
-            ServiceCollection services = new ServiceCollection();
+            ServiceCollection services = new();
             ConfigureServices(services);
             _serviceProvider = services.BuildServiceProvider();
 
@@ -69,7 +69,7 @@ namespace DeviceHost
             });
         }
 
-        private DeviceRepository _deviceRepository = new DeviceRepository();
-        private ServiceProvider _serviceProvider;
+        private readonly DeviceRepository _deviceRepository = new();
+        private readonly ServiceProvider _serviceProvider;
     }
 }

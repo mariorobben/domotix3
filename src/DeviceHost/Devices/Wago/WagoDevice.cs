@@ -72,15 +72,6 @@ namespace DeviceHost.Devices.Wago
             return result;
         }
 
-        #region IDevice implementation
-
-        public string DeviceName
-        {
-            get { return _name; }
-        }
-
-        #endregion
-
         public IEnumerable<IModule> Modules
         {
             get
@@ -159,15 +150,15 @@ namespace DeviceHost.Devices.Wago
 
         #region Fields
 
-        private readonly String _name;
-        private IList<IModule> _modules;
-        private IList<Terminal> _terminals;
-        private Int32 _binaryInputOffset;
-        private Int32 _binaryOutputOffset;
-        private Int32 _numberBinaryInputs;
-        private Int32 _numberBinaryOutputs;
-        private Byte[] _inputImage;
-        private Byte[] _outputImage;
+        private readonly string _name;
+        private readonly IList<IModule> _modules;
+        private readonly IList<Terminal> _terminals;
+        private readonly Int32 _binaryInputOffset;
+        private readonly Int32 _binaryOutputOffset;
+        private readonly Int32 _numberBinaryInputs;
+        private readonly Int32 _numberBinaryOutputs;
+        private readonly Byte[] _inputImage;
+        private readonly Byte[] _outputImage;
 
         #endregion
     }

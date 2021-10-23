@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DeviceHost.Devices.Wago;
 using DeviceHost.DevicesConfiguration;
+using Domotix3.Devices.Wago;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeviceHost.Controllers
@@ -19,8 +20,20 @@ namespace DeviceHost.Controllers
         }
 
         [HttpGet]
-        [Route("getterminals/{name}")]
-        public IActionResult Get(string name)
+        [Route("status/{name}")]
+        public IActionResult GetStatus(string name)
+        {
+            if (!_deviceRepository.TryGetDevice(name, out WagoDevice wagoDevice))
+            {
+                return NotFound();
+            }
+
+            return Ok(wagoDevice.GetStatus());
+        }
+
+        [HttpGet]
+        [Route("terminals/{name}")]
+        public IActionResult GetTerminals(string name)
         {
             if (!_deviceRepository.TryGetDevice(name, out WagoDevice wagoDevice))
             {
@@ -30,6 +43,32 @@ namespace DeviceHost.Controllers
             return Ok(wagoDevice.GetTerminals());
         }
 
+        [HttpGet]
+        [Route("io/{name}")]
+        public IActionResult Read(string name, IReadOnlyCollection<ReadRegion> regions)
+        {
+            if (!_deviceRepository.TryGetDevice(name, out WagoDevice wagoDevice))
+            {
+                return NotFound();
+            }
+
+            return Ok(wagoDevice.ReadRegions(regions));
+        }
+        
+        [HttpPut]
+        [Route("io/{name}")]
+        public IActionResult Write(string name, IReadOnlyCollection<WriteRegion> regions)
+        {
+            if (!_deviceRepository.TryGetDevice(name, out WagoDevice wagoDevice))
+            {
+                return NotFound();
+            }
+
+            wagoDevice.WriteRegions(regions);
+            
+            return Ok();
+        }
+        
         private readonly IDeviceRepository _deviceRepository;
     }
 }
