@@ -1,6 +1,8 @@
 #include <iostream>
 #ifdef _WIN32
 
+#include "wago.hpp"
+
 int main(int argc, char** argv)
 {
 	std::cout << "hello windows" << std::endl;

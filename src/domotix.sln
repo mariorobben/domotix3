@@ -5,6 +5,12 @@ VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "domotix3", "domotix3\domotix3.vcxproj", "{F7280A9F-BD56-4BAF-9137-0A1EBD90380F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{D38E3010-A40A-4452-861F-11954650F0EE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "devices", "devices", "{FF74C1D2-0166-4731-A46C-BC4861E8805E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wago", "lib\devices\wago\wago.vcxproj", "{3A399823-89DD-4426-A200-34056CDA59CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,9 +27,21 @@ Global
 		{F7280A9F-BD56-4BAF-9137-0A1EBD90380F}.Release|x64.Build.0 = Release|x64
 		{F7280A9F-BD56-4BAF-9137-0A1EBD90380F}.Release|x86.ActiveCfg = Release|Win32
 		{F7280A9F-BD56-4BAF-9137-0A1EBD90380F}.Release|x86.Build.0 = Release|Win32
+		{3A399823-89DD-4426-A200-34056CDA59CC}.Debug|x64.ActiveCfg = Debug|x64
+		{3A399823-89DD-4426-A200-34056CDA59CC}.Debug|x64.Build.0 = Debug|x64
+		{3A399823-89DD-4426-A200-34056CDA59CC}.Debug|x86.ActiveCfg = Debug|Win32
+		{3A399823-89DD-4426-A200-34056CDA59CC}.Debug|x86.Build.0 = Debug|Win32
+		{3A399823-89DD-4426-A200-34056CDA59CC}.Release|x64.ActiveCfg = Release|x64
+		{3A399823-89DD-4426-A200-34056CDA59CC}.Release|x64.Build.0 = Release|x64
+		{3A399823-89DD-4426-A200-34056CDA59CC}.Release|x86.ActiveCfg = Release|Win32
+		{3A399823-89DD-4426-A200-34056CDA59CC}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FF74C1D2-0166-4731-A46C-BC4861E8805E} = {D38E3010-A40A-4452-861F-11954650F0EE}
+		{3A399823-89DD-4426-A200-34056CDA59CC} = {FF74C1D2-0166-4731-A46C-BC4861E8805E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9D66EB3E-AA59-4CB0-9DF4-7D402A6E3487}

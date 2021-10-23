@@ -82,4 +82,6 @@ public:
 
 };
 
+#include "json_client.hpp"
+
 #endif
