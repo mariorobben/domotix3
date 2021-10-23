@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using JsonSubTypes;
 using Newtonsoft.Json;
 
-namespace DeviceHost.DevicesConfiguration
+namespace DeviceHost.Configuration
 {
     [JsonConverter(typeof(JsonSubtypes), "Type")]
     [JsonSubtypes.KnownSubType(typeof(WagoDeviceConfiguration), "wago")]
@@ -17,21 +13,16 @@ namespace DeviceHost.DevicesConfiguration
         string Name { get; }
     }
 
-    public class WagoDeviceConfiguration : IDeviceConfiguration
+    public sealed class WagoDeviceConfiguration : IDeviceConfiguration
     {
         public string Type { get; } = "wago";
         public string Name { get; set; }
         public List<string> Modules { get; set; }
     }
 
-    public class MilightDeviceConfiguration : IDeviceConfiguration
+    public sealed class MilightDeviceConfiguration : IDeviceConfiguration
     {
         public string Type { get; } = "milight";
         public string Name { get; set; }
-    }
-
-    public class DevicesConfiguration
-    {
-        public List<IDeviceConfiguration> Devices { get; set; }
     }
 }

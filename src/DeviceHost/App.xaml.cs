@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using DeviceHost.Configuration;
 using DeviceHost.Devices.Wago;
 using DeviceHost.DevicesConfiguration;
 using Microsoft.AspNetCore.Hosting;
@@ -57,9 +53,9 @@ namespace DeviceHost
 
         private void RegisterDevices()
         {
-            var config = JsonConvert.DeserializeObject<DevicesConfiguration.DevicesConfiguration>(
-                File.ReadAllText("devices_configuration.json"));
-            config.Devices.ForEach(deviceConfiguration =>
+            var projectConfiguration = JsonConvert.DeserializeObject<ProjectConfiguration>(
+                File.ReadAllText("robben.json"));
+            projectConfiguration.Devices.ForEach(deviceConfiguration =>
             {
                 switch (deviceConfiguration.Type)
                 {

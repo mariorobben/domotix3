@@ -1,0 +1,117 @@
+{
+  "devices": [
+    {
+      "type": "wago",
+      "name": "wago",
+      "modules": [
+        "750-430",
+        "750-430",
+        "750-430"
+      ]
+    },
+    {
+      "type": "milight",
+      "name": "milight berging beneden"
+    },
+    {
+      "type": "milight",
+      "name": "milight bureau"
+    }
+  ],
+  "infrastructure": [
+    {
+      "name": "Huis",
+      "groups": [
+        {
+          "name": "Gelijkvloers",
+          "groups": [
+            {
+              "name": "Inkomhal"
+            },
+            {
+              "name": "Toilet"
+            },
+            {
+              "name": "Woonkamer"
+            },
+            {
+              "name": "Eetkamer"
+            },
+            {
+              "name": "Keuken"
+            },
+            {
+              "name": "Berging"
+            },
+            {
+              "name": "Garage"
+            }
+          ] 
+        },
+        {
+          "name": "Verdieping",
+          "groups": [
+            {
+              "name": "Nachthal"
+            },
+            {
+              "name": "Badkamer"
+            },
+            {
+              "name": "Toilet"
+            },
+            {
+              "name": "Berging"
+            },
+            {
+              "name": "Bureau Mirella"
+            },
+            {
+              "name": "Dressing"
+            },
+            {
+              "name": "Bureau Mario"
+            },
+            {
+              "name": "Slaapkamer Timon"
+            },
+            {
+              "name": "Slaapkamr Thomas"
+            },
+            {
+              "name": "Slaapkamer Sander"
+            }
+          ]  
+        },
+        {
+          "name": "Zolder",
+          "groups": [
+            {
+              "name": "Slaapkamer"
+            },
+            {
+              "name": "Rommelzolder"
+            },
+            {
+              "name": "Hal"
+            }
+          ] 
+        },
+        {
+          "name": "Buiten",
+          "groups": [
+            {
+              "name": "Achterkant"
+            },
+            {
+              "name": "Voorkant"
+            },
+            {
+              "name": "Tuinhuis"
+            }
+          ] 
+        }
+      ]
+    }
+  ] 
+}

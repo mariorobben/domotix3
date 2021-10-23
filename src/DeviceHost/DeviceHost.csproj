@@ -20,8 +20,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="devices_configuration.json">
+    <None Update="robben.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="InfrastructureConfiguration\" />
+    <Folder Include="ProjectConfiguration\" />
   </ItemGroup>
 </Project>
