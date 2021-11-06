@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DeviceHost.Configuration;
 using Domotix3.Devices.Wago;
 
 namespace DeviceHost.Devices.Wago
 {
     public sealed class WagoDevice : AbstractDevice, IWago
     {
-        public WagoDevice(string deviceName, IReadOnlyCollection<string> moduleTypes)
+        public WagoDevice(string deviceName, IReadOnlyCollection<IWagoModule> modules)
             : base(deviceName)
         {
-            _modules = moduleTypes.Select(moduleType => ModuleFactory.CreateModule(moduleType)).ToList();
+            _modules = modules.Select(module => ModuleFactory.CreateModule(module)).ToList();
             _terminals = new List<Terminal>(_modules.Count);
 
             _binaryInputOffset = 0;
@@ -25,10 +26,10 @@ namespace DeviceHost.Devices.Wago
             {
                 _terminals.Add(new Terminal(_terminals.Count, 0, _binaryInputOffset, 0, 0, 0, 0, 0));
 
-                _binaryInputOffset += (module.InputBytes != null ? module.InputBytes.Length : 0);
-                _numberBinaryInputs += (module.InputBits != null ? module.InputBits.Length : 0);
-                _binaryOutputOffset += (module.OutputBytes != null ? module.OutputBytes.Length : 0);
-                _numberBinaryOutputs += (module.OutputBits != null ? module.OutputBits.Length : 0);
+                _binaryInputOffset += module.InputBytes?.Length ?? 0;
+                _numberBinaryInputs += module.InputBits?.Length ?? 0;
+                _binaryOutputOffset += module.OutputBytes?.Length ?? 0;
+                _numberBinaryOutputs += module.OutputBits?.Length ?? 0;
             }
 
             _inputImage = new Byte[Constants.IoSize];

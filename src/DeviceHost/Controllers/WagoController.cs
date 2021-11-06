@@ -8,6 +8,7 @@ using DeviceHost.Devices.Wago;
 using DeviceHost.DevicesConfiguration;
 using Domotix3.Devices.Wago;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace DeviceHost.Controllers
 {
@@ -45,7 +46,7 @@ namespace DeviceHost.Controllers
 
         [HttpGet]
         [Route("io/{name}")]
-        public IActionResult Read(string name, IReadOnlyCollection<ReadRegion> regions)
+        public IActionResult Read(string name, [FromBody] IReadOnlyCollection<ReadRegion> regions)
         {
             if (!_deviceRepository.TryGetDevice(name, out WagoDevice wagoDevice))
             {
@@ -57,7 +58,7 @@ namespace DeviceHost.Controllers
         
         [HttpPut]
         [Route("io/{name}")]
-        public IActionResult Write(string name, IReadOnlyCollection<WriteRegion> regions)
+        public IActionResult Write(string name, [FromBody] IReadOnlyCollection<WriteRegion> regions)
         {
             if (!_deviceRepository.TryGetDevice(name, out WagoDevice wagoDevice))
             {

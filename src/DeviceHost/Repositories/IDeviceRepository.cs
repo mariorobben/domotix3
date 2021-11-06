@@ -10,6 +10,7 @@ namespace DeviceHost.DevicesConfiguration
     public interface IDeviceRepository
     {
         bool TryGetDevice<TDevice>(string deviceName, out TDevice device) where TDevice : class, IDevice;
+        IEnumerable<IDevice> GetAllDevices();
     }
 
     public sealed class DeviceRepository : IDeviceRepository
@@ -24,6 +25,11 @@ namespace DeviceHost.DevicesConfiguration
             _devices.TryGetValue(deviceName, out IDevice foundDevice);
             device = foundDevice as TDevice;
             return device is not null;
+        }
+
+        public IEnumerable<IDevice> GetAllDevices()
+        {
+            return _devices.Values;
         }
 
         private IDictionary<string, IDevice> _devices = new Dictionary<string, IDevice>();

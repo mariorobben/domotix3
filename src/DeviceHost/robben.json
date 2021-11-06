@@ -4,9 +4,15 @@
       "type": "wago",
       "name": "wago",
       "modules": [
-        "750-430",
-        "750-430",
-        "750-430"
+        {
+          "type": "750-430"
+        },
+        {
+          "type": "750-530" 
+        },
+        {
+          "type": "750-559"
+        }
       ]
     },
     {
@@ -18,100 +24,117 @@
       "name": "milight bureau"
     }
   ],
-  "infrastructure": [
-    {
-      "name": "Huis",
-      "groups": [
-        {
-          "name": "Gelijkvloers",
-          "groups": [
-            {
-              "name": "Inkomhal"
-            },
-            {
-              "name": "Toilet"
-            },
-            {
-              "name": "Woonkamer"
-            },
-            {
-              "name": "Eetkamer"
-            },
-            {
-              "name": "Keuken"
-            },
-            {
-              "name": "Berging"
-            },
-            {
-              "name": "Garage"
-            }
-          ] 
-        },
-        {
-          "name": "Verdieping",
-          "groups": [
-            {
-              "name": "Nachthal"
-            },
-            {
-              "name": "Badkamer"
-            },
-            {
-              "name": "Toilet"
-            },
-            {
-              "name": "Berging"
-            },
-            {
-              "name": "Bureau Mirella"
-            },
-            {
-              "name": "Dressing"
-            },
-            {
-              "name": "Bureau Mario"
-            },
-            {
-              "name": "Slaapkamer Timon"
-            },
-            {
-              "name": "Slaapkamr Thomas"
-            },
-            {
-              "name": "Slaapkamer Sander"
-            }
-          ]  
-        },
-        {
-          "name": "Zolder",
-          "groups": [
-            {
-              "name": "Slaapkamer"
-            },
-            {
-              "name": "Rommelzolder"
-            },
-            {
-              "name": "Hal"
-            }
-          ] 
-        },
-        {
-          "name": "Buiten",
-          "groups": [
-            {
-              "name": "Achterkant"
-            },
-            {
-              "name": "Voorkant"
-            },
-            {
-              "name": "Tuinhuis"
-            }
-          ] 
-        }
-      ]
-    }
-  ] 
+  "infrastructure": {
+    "groups": [
+      {
+        "name": "Huis",
+        "groups": [
+          {
+            "name": "Gelijkvloers",
+            "groups": [
+              {
+                "name": "Inkomhal",
+                "elements": [
+                  {
+                    "type": "binaryInput",
+                    "input": 0
+                  },
+                  {
+                    "type": "binaryInput",
+                    "input": 1,
+                    "invert": true
+                  },
+                  {
+                    "type": "binaryInput",
+                    "input": 2
+                  }
+                ]
+              },
+              {
+                "name": "Toilet"
+              },
+              {
+                "name": "Woonkamer"
+              },
+              {
+                "name": "Eetkamer"
+              },
+              {
+                "name": "Keuken"
+              },
+              {
+                "name": "Berging"
+              },
+              {
+                "name": "Garage"
+              }
+            ]
+          },
+          {
+            "name": "Verdieping",
+            "groups": [
+              {
+                "name": "Nachthal"
+              },
+              {
+                "name": "Badkamer"
+              },
+              {
+                "name": "Toilet"
+              },
+              {
+                "name": "Berging"
+              },
+              {
+                "name": "Bureau Mirella"
+              },
+              {
+                "name": "Dressing"
+              },
+              {
+                "name": "Bureau Mario"
+              },
+              {
+                "name": "Slaapkamer Timon"
+              },
+              {
+                "name": "Slaapkamr Thomas"
+              },
+              {
+                "name": "Slaapkamer Sander"
+              }
+            ]
+          },
+          {
+            "name": "Zolder",
+            "groups": [
+              {
+                "name": "Slaapkamer"
+              },
+              {
+                "name": "Rommelzolder"
+              },
+              {
+                "name": "Hal"
+              }
+            ]
+          },
+          {
+            "name": "Buiten",
+            "groups": [
+              {
+                "name": "Achterkant"
+              },
+              {
+                "name": "Voorkant"
+              },
+              {
+                "name": "Tuinhuis"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }

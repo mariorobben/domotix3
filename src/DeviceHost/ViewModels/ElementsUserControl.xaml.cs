@@ -12,16 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using DeviceHost.DevicesConfiguration;
 
-namespace DeviceHost
+namespace DeviceHost.ViewModels
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ElementUserControl.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ElementsUserControl : UserControl
     {
-        public MainWindow()
+        public ElementsUserControl()
         {
             InitializeComponent();
         }

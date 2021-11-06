@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:DeviceHost"
              Startup="OnStartup">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DataTemplates.xaml" />
+                <ResourceDictionary Source="Devices/MiLight/DataTemplates.xaml" />
+                <ResourceDictionary Source="Devices/Wago/DataTemplates.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

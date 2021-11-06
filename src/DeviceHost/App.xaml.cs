@@ -2,10 +2,13 @@
 using System.Threading.Tasks;
 using System.Windows;
 using DeviceHost.Configuration;
+using DeviceHost.Devices;
 using DeviceHost.Devices.Wago;
 using DeviceHost.DevicesConfiguration;
+using DeviceHost.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Newtonsoft.Json;
 
 namespace DeviceHost
@@ -17,6 +20,8 @@ namespace DeviceHost
     {
         public App()
         {
+            _projectConfiguration = JsonConvert.DeserializeObject<ProjectConfiguration>(File.ReadAllText("robben.json"));
+
             RegisterDevices();
 
             ServiceCollection services = new();
@@ -47,29 +52,22 @@ namespace DeviceHost
 
         private void OnStartup(object sender, StartupEventArgs e)
         {
-            var mainWindow = _serviceProvider.GetService<MainWindow>();
+            var mainWindow = new MainWindow();
             mainWindow.Show();
+
+            mainWindow.DataContext = new MainWindowViewModel(_deviceRepository, _projectConfiguration);
         }
 
         private void RegisterDevices()
         {
-            var projectConfiguration = JsonConvert.DeserializeObject<ProjectConfiguration>(
-                File.ReadAllText("robben.json"));
-            projectConfiguration.Devices.ForEach(deviceConfiguration =>
+            _projectConfiguration.Devices.ForEach(deviceConfiguration =>
             {
-                switch (deviceConfiguration.Type)
-                {
-                    case "wago":
-                    {
-                        var wagoDeviceConfiguration = deviceConfiguration as WagoDeviceConfiguration;
-                        _deviceRepository.RegisterDevice(new WagoDevice(wagoDeviceConfiguration.Name, wagoDeviceConfiguration.Modules));
-                        break;
-                    }
-                }
+                _deviceRepository.RegisterDevice(DeviceFactory.CreateDevice(deviceConfiguration));
             });
         }
 
         private readonly DeviceRepository _deviceRepository = new();
         private readonly ServiceProvider _serviceProvider;
+        private ProjectConfiguration _projectConfiguration;
     }
 }

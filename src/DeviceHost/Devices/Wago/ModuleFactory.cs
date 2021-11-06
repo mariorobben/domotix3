@@ -1,23 +1,27 @@
-﻿using System;
+﻿using DeviceHost.Configuration;
+using System;
 using System.Collections.Generic;
-using DeviceHost.Devices.Wago.Modules._750_430;
 
 namespace DeviceHost.Devices.Wago
 {
     public static class ModuleFactory
     {
-        static ModuleFactory()
+        public static IModule CreateModule(IWagoModule module)
         {
-            _moduleFactories = new Dictionary<String, IModuleFactory>();
+            if (module is Wago_750_430_Module)
+            {
+                return new Module_750_430();
+            }
+            else if (module is Wago_750_530_Module)
+            {
+                return new Module_750_530();
+            }
+            else if (module is Wago_750_559_Module)
+            {
+                return new Module_750_559();
+            }
 
-            _moduleFactories.Add("750-430", new Module_750_430_Factory());
+            throw new ArgumentException("Invalid module.");
         }
-
-        public static IModule CreateModule(String type)
-        {
-            return _moduleFactories[type].CreateModule();
-        }
-
-        private static IDictionary<string, IModuleFactory> _moduleFactories;
     }
 }

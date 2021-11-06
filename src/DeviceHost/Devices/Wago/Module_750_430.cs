@@ -1,4 +1,4 @@
-﻿namespace DeviceHost.Devices.Wago.Modules._750_430
+﻿namespace DeviceHost.Devices.Wago
 {
 
     public sealed class Module_750_430 : AbstractModule
