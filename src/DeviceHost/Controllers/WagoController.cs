@@ -46,26 +46,26 @@ namespace DeviceHost.Controllers
 
         [HttpGet]
         [Route("io/{name}")]
-        public IActionResult Read(string name, [FromBody] IReadOnlyCollection<ReadRegion> regions)
+        public IActionResult Read(string name, [FromQuery] int offset, [FromQuery] int size)
         {
             if (!_deviceRepository.TryGetDevice(name, out WagoDevice wagoDevice))
             {
                 return NotFound();
             }
 
-            return Ok(wagoDevice.ReadRegions(regions));
+            return Ok(wagoDevice.ReadRegion(new ReadRegion(offset, size)));
         }
         
         [HttpPut]
         [Route("io/{name}")]
-        public IActionResult Write(string name, [FromBody] IReadOnlyCollection<WriteRegion> regions)
+        public IActionResult Write(string name, [FromQuery] int offset, [FromBody] byte[] bytes)
         {
             if (!_deviceRepository.TryGetDevice(name, out WagoDevice wagoDevice))
             {
                 return NotFound();
             }
 
-            wagoDevice.WriteRegions(regions);
+            wagoDevice.WriteRegion(new WriteRegion(offset, bytes));
             
             return Ok();
         }

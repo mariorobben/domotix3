@@ -2,37 +2,13 @@
 
 namespace Domotix3.Devices.MiLight
 {
-
-    public struct Brightness : IComparable<Brightness>
+    public sealed class Brightness
     {
-        public Brightness(Byte level)
+        public Brightness(byte value)
         {
-            if (level < 0 || level >= Constants.MaxBrightnessLevels)
-            {
-                throw new ArgumentOutOfRangeException("id");
-            }
-
-            _level = (Byte)level;
+            Value = value;
         }
 
-        public Byte Level
-        {
-            get
-            {
-                return _level;
-            }
-        }
-
-        public int CompareTo(Brightness other)
-        {
-            return _level - other.Level;
-        }
-
-        public override string ToString()
-        {
-            return String.Format("brightness {0}", _level);
-        }
-
-        private Byte _level;
+        public byte Value { get; init; }
     }
 }

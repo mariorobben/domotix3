@@ -1,57 +1,56 @@
+#include <boost/progress.hpp>
+#define BOOST_USE_WINDOWS_H
+
+#include <conio.h>
+
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <boost/asio.hpp>
 
-#include "wago.hpp"
+#include "wago_http_client.hpp"
+#include "httplib.h"
 
 using namespace std;
 using namespace wago;
 
-unique_ptr<wago_device> create_wago_device()
+#include <iostream>
+#include <boost/array.hpp>
+#include "robben_engine.hpp"
+
+shared_ptr<wago_device> create_wago_device()
 {
-	return std::make_unique<wago_http_client>();
+	return std::make_shared<wago_http_client>("wago", "localhost", 5000);
 }
+
+using boost::asio::ip::tcp;
 
 int main(int argc, char** argv)
 {
+	/*WSADATA wsaData;
+	WSAStartup(MAKEWORD(2, 2), &wsaData);
+
 	auto wago_device = create_wago_device();
 
-	auto status = wago_device->get_status();
-	cout << "status" << endl;
-	cout << "get_bit_count: " << status.get_bit_count() << endl;
-	cout << "get_terminal_count: " << status.get_terminal_count() << endl;
-	cout << "get_bit_count_analog_input: " << status.get_bit_count_analog_input() << endl;
-	cout << "get_bit_count_analog_output: " << status.get_bit_count_analog_output() << endl;
-	cout << "get_bit_count_digital_input: " << status.get_bit_count_digital_input() << endl;
-	cout << "get_bit_count_digital_output: " << status.get_bit_count_digital_output() << endl;
-	cout << endl;
-
-	auto terminals = wago_device->get_terminals();
-	cout << "terminals" << endl;
-	for (auto terminal : terminals)
-	{
-		cout << "get_position: " << terminal.get_position() << endl;
-		cout << "get_type: " << terminal.get_type() << endl;
-		cout << "get_bit_offset_out: " << terminal.get_bit_offset_out() << endl;
-		cout << "get_bit_size_out: " << terminal.get_bit_size_out() << endl;
-		cout << "get_bit_offset_in: " << terminal.get_bit_offset_in() << endl;
-		cout << "get_bit_size_in: " << terminal.get_bit_size_in() << endl;
-		cout << "get_channels: " << terminal.get_channels() << endl;
-		cout << "get_pi_format: " << terminal.get_pi_format() << endl;
-		cout << endl;
-	}
-
-	int i = 0;
 	while (true)
 	{
-		auto bts = read_bytes(*wago_device, 0, 1);
-		write_bytes(*wago_device, 8, bts);
-		cout << "." << flush;
+		read_bytes_region_type rb(0, 1);
+		auto io = wago_device->read_bytes(rb);
+		cout << (int)io[0] << endl;
 
-		this_thread::sleep_for(chrono::milliseconds(10));
-		if (i == 0) { cout << "*" << flush; }
-		i = (i + 1) % 100;
+		bytes_type bytes{ io[0] };
+		write_bytes_region_type wb(8, bytes);
+		wago_device->write_bytes(wb);
+
+		Sleep(10);
 	}
+	return 0;*/
 
-	return 0;
+	auto wago_device = create_wago_device();
+	domotix3::test_engine engine(wago_device);
+	engine.start(std::chrono::milliseconds(50));
+
+	cin.get();
+
+	engine.stop();
 }

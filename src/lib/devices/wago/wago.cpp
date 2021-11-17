@@ -113,23 +113,34 @@ wago_exception::wago_exception(const char* message)
 
 #pragma endregion
 
-#pragma region extension methods
-
-void write_bytes(wago_device& wago_device, int32_t offset, const bytes_type& bytes)
+wago_io_bindings::wago_io_bindings(wago_device& wago_device)
+	: domotix3::io_bindings()
+	, wago_device_(wago_device)
 {
-	write_bytes_region_type regions;
-	regions.push_back(make_pair(offset, bytes));
-	wago_device.write_bytes(regions);
+	auto status = wago_device_.get_status();
+	resize(status.get_bit_count_analog_input(), status.get_bit_count_digital_input(), status.get_bit_count_analog_output(), status.get_bit_count_digital_output());
 }
 
-bytes_type read_bytes(wago_device& wago_device, int32_t offset, int32_t size)
+wago_device& wago_io_bindings::get_wago_device()
 {
-	read_bytes_region_type regions;
-	regions.push_back(make_pair(offset, size));
-	auto result = wago_device.read_bytes(regions);
-	return result.front();
+	return wago_device_;
 }
 
-#pragma endregion
+wago_io_bindings_engine::wago_io_bindings_engine(domotix3::engine& engine, wago_device& wago_device)
+	: wago_io_bindings(wago_device)
+	, module(engine)
+{
+}
+
+void wago_io_bindings_engine::input_scan()
+{
+	auto result = get_wago_device().read_bytes(read_bytes_region_type(0, get_input_image().size()));
+	std::copy(result.begin(), result.end(), get_input_image().begin());
+}
+
+void wago_io_bindings_engine::output_scan()
+{
+	get_wago_device().write_bytes(write_bytes_region_type(0, bytes_type(get_output_image().begin(), get_output_image().end())));
+}
 
 };

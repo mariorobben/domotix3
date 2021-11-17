@@ -15,42 +15,54 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="domotix3.cpp">
+    <ClCompile Include="engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="manual_pir_light.cpp">
+    <ClCompile Include="analog_output.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="robben_engine.cpp">
+    <ClCompile Include="binary_input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sunset_sunrise.cpp">
+    <ClCompile Include="binary_output.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sunset_timer.cpp">
+    <ClCompile Include="interval_timers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="woonkamer.cpp">
+    <ClCompile Include="io_bindings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="output_path.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shutters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="httplib.h">
+    <ClInclude Include="analog_output.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="manual_pir_light.hpp">
+    <ClInclude Include="binary_input.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="robben_engine.hpp">
+    <ClInclude Include="binary_output.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sunset_sunrise.hpp">
+    <ClInclude Include="engine.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sunset_timer.hpp">
+    <ClInclude Include="interval_timers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="woonkamer.hpp">
+    <ClInclude Include="io_bindings.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="output_path.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shutters.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

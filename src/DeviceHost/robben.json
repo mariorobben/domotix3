@@ -8,20 +8,23 @@
           "type": "750-430"
         },
         {
-          "type": "750-530" 
+          "type": "750-559"
         },
         {
-          "type": "750-559"
+          "type": "750-530"
+        },
+        {
+          "type": "750-530"
         }
       ]
     },
     {
       "type": "milight",
-      "name": "milight berging beneden"
+      "name": "milight1"
     },
     {
       "type": "milight",
-      "name": "milight bureau"
+      "name": "milight2"
     }
   ],
   "infrastructure": {

@@ -5,6 +5,10 @@
 #include <vector>
 #include <stdexcept>
 
+#include <engine.hpp>
+
+#include "io_bindings.hpp"
+
 namespace wago
 {
 
@@ -58,9 +62,8 @@ private:
 
 typedef std::vector<uint8_t> bytes_type;
 typedef std::vector<terminal> terminals_type;
-typedef std::vector<std::pair<int32_t, bytes_type>> write_bytes_region_type;
-typedef std::vector<std::pair<int32_t, int32_t>> read_bytes_region_type;
-typedef std::vector<bytes_type> read_bytes_vector_type;
+typedef std::pair<int32_t, bytes_type> write_bytes_region_type;
+typedef std::pair<int32_t, int32_t> read_bytes_region_type;
 
 class wago_device
 {
@@ -68,11 +71,8 @@ public:
 	virtual status get_status() = 0;
 	virtual terminals_type get_terminals() = 0;
 	virtual void write_bytes(const write_bytes_region_type& regions) = 0;
-	virtual read_bytes_vector_type read_bytes(const read_bytes_region_type& regions) = 0;
+	virtual bytes_type read_bytes(const read_bytes_region_type& regions) = 0;
 };
-
-void write_bytes(wago_device& wago_device, int32_t offset, const bytes_type& bytes);
-bytes_type read_bytes(wago_device&  wago_device, int32_t offset, int32_t size);
 
 class wago_exception : public std::runtime_error
 {
@@ -80,8 +80,26 @@ public:
 	wago_exception(const char* message);
 };
 
+class wago_io_bindings : public domotix3::io_bindings
+{
+public:
+	wago_io_bindings(wago_device& wago_device);
+
+	wago_device& get_wago_device();
+
+private:
+	wago_device& wago_device_;
 };
 
-#include "wago_http_client.hpp"
+class wago_io_bindings_engine : public wago_io_bindings, public domotix3::module, public domotix3::input_scan_participant, public domotix3::output_scan_participant
+{
+public:
+	wago_io_bindings_engine(domotix3::engine& engine, wago_device & wago_device);
+
+	void input_scan();
+	void output_scan();
+};
+
+};
 
 #endif

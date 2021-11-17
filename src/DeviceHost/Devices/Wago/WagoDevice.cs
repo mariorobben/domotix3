@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using DeviceHost.Configuration;
 using Domotix3.Devices.Wago;
 
@@ -17,28 +19,38 @@ namespace DeviceHost.Devices.Wago
             _modules = modules.Select(module => ModuleFactory.CreateModule(module)).ToList();
             _terminals = new List<Terminal>(_modules.Count);
 
-            _binaryInputOffset = 0;
-            _numberBinaryInputs = 0;
-            _binaryOutputOffset = 0;
-            _numberBinaryOutputs = 0;
+            var byteInputOffset = 0;
+            var byteOutputOffset = 0;
+            _binaryInputOffset = _modules.Sum(m => m.InputBytes?.Length ?? 0) * 8;
+            var bitInputOffset = _binaryInputOffset;
+            _binaryOutputOffset = _modules.Sum(m => m.OutputBytes?.Length ?? 0) * 8;
+            var bitOutputOffset = _binaryOutputOffset;
+            _bitCount = 0;
 
             foreach (var module in _modules)
             {
-                _terminals.Add(new Terminal(_terminals.Count, 0, _binaryInputOffset, 0, 0, 0, 0, 0));
+                var bitSizeOut = module.OutputBytes?.Length * 8 ?? 0 + module.OutputBits?.Length ?? 0;
+                var bitSizeIn = module.InputBytes?.Length * 8 ?? 0 + module.InputBits?.Length ?? 0;
+                _bitCount += (bitSizeIn + bitSizeOut);
 
-                _binaryInputOffset += module.InputBytes?.Length ?? 0;
-                _numberBinaryInputs += module.InputBits?.Length ?? 0;
-                _binaryOutputOffset += module.OutputBytes?.Length ?? 0;
-                _numberBinaryOutputs += module.OutputBits?.Length ?? 0;
+                _terminals.Add(new Terminal(_terminals.Count, module.Type, bitSizeOut == 0 ? 0 : module.OutputBytes is null ? bitOutputOffset : byteOutputOffset, bitSizeOut, bitSizeIn == 0 ? 0 : module.InputBytes is null ? bitInputOffset : byteInputOffset, bitSizeIn, module.Channels, module.PiFormat));
+
+                bitInputOffset += module.InputBits?.Length ?? 0;
+                byteInputOffset += module.InputBytes?.Length ?? 0;
+                bitOutputOffset += module.OutputBits?.Length ?? 0;
+                byteOutputOffset += module.OutputBytes?.Length ?? 0;
             }
 
             _inputImage = new Byte[Constants.IoSize];
             _outputImage = new Byte[Constants.IoSize];
+
+            _numberBinaryInputs = _modules.Sum(m => m.InputBits?.Length ?? 0);
+            _numberBinaryOutputs = _modules.Sum(m => m.OutputBits?.Length ?? 0);
         }
         
         public Status GetStatus()
         {
-            return new Status(0, _modules.Count, _binaryInputOffset * 8, _binaryOutputOffset * 8, _numberBinaryInputs, _numberBinaryOutputs);
+            return new Status(_bitCount, _modules.Count,_binaryInputOffset, _binaryOutputOffset, _numberBinaryInputs, _numberBinaryOutputs);
         }
 
         public IReadOnlyCollection<Terminal> GetTerminals()
@@ -46,31 +58,21 @@ namespace DeviceHost.Devices.Wago
             return _terminals.ToList().AsReadOnly();
         }
 
-        public void WriteRegions(IReadOnlyCollection<WriteRegion> regions)
+        public void WriteRegion(WriteRegion region)
         {
-            foreach (var region in regions)
-            {
-                Array.Copy(region.Bytes, 0, _outputImage, region.Offset, region.Bytes.Length);
-            }
+            Array.Copy(region.Bytes, 0, _outputImage, region.Offset, region.Bytes.Length);
 
             WriteOutputImage(_outputImage);
         }
 
-        public IReadOnlyCollection<byte[]> ReadRegions(IReadOnlyCollection<ReadRegion> regions)
+        public byte[] ReadRegion(ReadRegion region)
         {
-            var result = new List<Byte[]>();
-
             var inputImage = ReadInputImage();
             Array.Copy(inputImage, _inputImage, Math.Min(inputImage.Length, _inputImage.Length));
 
-            foreach (var region in regions)
-            {
-                var regionResult = new byte[region.Size];
-                Array.Copy(_inputImage, region.Offset, regionResult, 0, region.Size);
-                result.Add(regionResult);
-            }
-
-            return result;
+            var regionResult = new byte[region.Size];
+            Array.Copy(_inputImage, region.Offset, regionResult, 0, region.Size);
+            return regionResult;
         }
 
         public IEnumerable<IModule> Modules
@@ -114,14 +116,14 @@ namespace DeviceHost.Devices.Wago
         {
             Int32 outputByteOffset = 0;
             Int32 outputBitOffset = 0;
-            Int32 minimumLength = _binaryOutputOffset + (_numberBinaryOutputs + 7) / 8;
+            Int32 minimumLength = _binaryOutputOffset/8 + (_numberBinaryOutputs + 7) / 8;
             if (image.Length < minimumLength)
             {
                 var enlargedImage = new Byte[minimumLength];
                 Buffer.BlockCopy(image, 0, enlargedImage, 0, image.Length);
                 image = enlargedImage;
             }
-            var allOutputBits = new BitArray(image.Skip(_binaryOutputOffset).ToArray());
+            var allOutputBits = new BitArray(image.Skip(_binaryOutputOffset/8).ToArray());
 
             foreach (var module in _modules)
             {
@@ -154,12 +156,14 @@ namespace DeviceHost.Devices.Wago
         private readonly string _name;
         private readonly IList<IModule> _modules;
         private readonly IList<Terminal> _terminals;
-        private readonly Int32 _binaryInputOffset;
-        private readonly Int32 _binaryOutputOffset;
-        private readonly Int32 _numberBinaryInputs;
-        private readonly Int32 _numberBinaryOutputs;
         private readonly Byte[] _inputImage;
         private readonly Byte[] _outputImage;
+
+        private int _bitCount = 0;
+        private int _binaryInputOffset = 0;
+        private int _binaryOutputOffset = 0;
+        private int _numberBinaryInputs = 0;
+        private int _numberBinaryOutputs = 0;
 
         #endregion
     }

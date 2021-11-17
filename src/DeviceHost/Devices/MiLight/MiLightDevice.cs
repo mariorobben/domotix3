@@ -107,25 +107,25 @@ namespace DeviceHost.Engine.MiLight
         {
             if (_SelectedZone.HasValue)
             {
-                _zones[_SelectedZone.Value.Id].Brightness = brightness.Level;
+                _zones[_SelectedZone.Value.Id].Brightness = brightness.Value;
             }
             else
             {
-                _zones.ToList().ForEach(ch => { ch.Brightness = brightness.Level; });
+                _zones.ToList().ForEach(ch => { ch.Brightness = brightness.Value; });
             }
         }
 
-        public void Hue(byte hue)
+        public void Hue(Hue hue)
         {
             if (_SelectedZone.HasValue)
             {
-                _zones[_SelectedZone.Value.Id].Hue = hue;
+                _zones[_SelectedZone.Value.Id].Hue = hue.Value;
                 _zones[_SelectedZone.Value.Id].IsDisco = false;
                 _zones[_SelectedZone.Value.Id].IsWhite = false;
             }
             else
             {
-                _zones.ToList().ForEach(ch => { ch.Hue = hue; ch.IsDisco = false; ch.IsWhite = false; });
+                _zones.ToList().ForEach(ch => { ch.Hue = hue.Value; ch.IsDisco = false; ch.IsWhite = false; });
             }
         }
 

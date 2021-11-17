@@ -9,13 +9,18 @@ namespace DeviceHost.Devices.Wago
 {
     public abstract class AbstractModule : IModule
     {
-        protected AbstractModule(Int16 numberInputBytes, Int16 numberInputBits, Int16 numberOutputBytes, Int16 numberOutputBits)
+        protected AbstractModule(int type, Int16 numberInputBytes, Int16 numberInputBits, Int16 numberOutputBytes, Int16 numberOutputBits, int channels, int piFormat)
         {
+            Type = type;
             _inputBytes = numberInputBytes > 0 ? new Byte[numberInputBytes] : null;
             _inputBits = numberInputBits > 0 ? new BitArray(numberInputBits) : null;
             _outputBytes = numberOutputBytes > 0 ? new Byte[numberOutputBytes] : null;
             _outputBits = numberOutputBits > 0 ? new BitArray(numberOutputBits) : null;
+            Channels = channels;
+            PiFormat = piFormat;
         }
+
+        public int Type { get; }
 
         public Byte[] InputBytes
         {
@@ -36,6 +41,10 @@ namespace DeviceHost.Devices.Wago
         {
             get { return _outputBits; }
         }
+
+        public int Channels { get; }
+
+        public int PiFormat { get; }
 
         public void NotifyOutputsChanged()
         {

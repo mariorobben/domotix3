@@ -13,7 +13,7 @@ namespace Domotix3.Devices.MiLight
         void Disco();
         void DiscoIncSpeed();
         void DiscoDecSpeed();
-        void Brightness(Brightness level);
-        void Hue(Byte hue);
+        void Brightness(Brightness brightness);
+        void Hue(Hue hue);
     }
 }

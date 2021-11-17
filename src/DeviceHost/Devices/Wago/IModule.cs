@@ -9,6 +9,9 @@ namespace DeviceHost.Devices.Wago
 {
     public interface IModule
     {
+        int Type { get; }
+        int Channels { get; }
+        int PiFormat { get; }
         Byte[] InputBytes { get; }
         BitArray InputBits { get; }
         Byte[] OutputBytes { get; }

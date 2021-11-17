@@ -9,7 +9,7 @@ namespace DeviceHost.Devices.Wago
     public sealed class Module_750_559 : AbstractModule
     {
         public Module_750_559()
-            : base(0, 0, 8, 0)
+            : base(559, 0, 0, 8, 0, 4, 0)
         {
         }
     }
